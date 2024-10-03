@@ -4,13 +4,6 @@
 
 <!-- namespace 뒤에 . 붙이지 않음 -->
 <mapper namespace="ns.sql.MyProductMapper">
-	<resultMap type="MyProduct" id="myProduct">
-		<result property="id" column="id"/>
-		<result property="name" column="name"/>
-		<result property="maker" column="maker"/>
-		<result property="price" column="price"/>
-	</resultMap>
-	
 	<sql id="select-myproduct">
 		SELECT
 		id, name, maker, price
@@ -25,25 +18,19 @@
 	
 	<!-- 상품명으로 검색 :: LIKE 연산자와 와일드 카드 사용 -->
 	<select id="findProductByName" parameterType="string" resultType="myProduct">
-		SELECT
-		id, name, maker, price
-		FROM myproduct
+		<include refid="select-myproduct"/>
 		WHERE name LIKE CONCAT('%', #{value}, '%')
 	</select>
 	
 	<!-- 제조사명으로 검색 -->
 	<select id="findProductByMaker" parameterType="string" resultType="myProduct">
-		SELECT
-		id, name, maker, price
-		FROM myproduct
+		<include refid="select-myproduct"/>
 		WHERE maker=#{VALUE}
 	</select>
 	
 	<!-- 모든 상품 검색 -->
 	<select id="findProducts" resultType="myProduct">
-		SELECT
-		id, name, maker, price
-		FROM myproduct
+		<include refid="select-myproduct"/>
 	</select>
 	
 </mapper>
