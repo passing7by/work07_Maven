@@ -47,8 +47,8 @@ public class MyProductUnitTest01 {
 		
 		//3
 		System.out.println("=================================");
-		MyProduct myProduct = session.selectOne(ns+"findProductByMaker", "로얄캐닌");
-		System.out.println(myProduct);
+		 MyProduct myProduct = session.selectOne(ns+"findProductByMaker", "엘라스틴");
+		 System.out.println(myProduct);
 		System.out.println("=================================");
 		
 		//4

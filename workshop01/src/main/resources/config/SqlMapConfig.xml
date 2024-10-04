@@ -25,8 +25,10 @@ DB Acess하는 모든 요소를 가지고 있기 때문
 	</settings>
 	
 	<!-- 2. VO 객체 Wiring -->
+	<!-- 테이블이 여러개 있을 경우 VO도 여러개 있음 => typeAlias도 여러개 있음 -->
 	<typeAliases>
-		<typeAlias type="com.service.spring.domain.MyProduct" alias="myProduct"/>
+		<!-- <typeAlias type="com.service.spring.domain.MyProduct" alias="myProduct"/> -->
+		<package name="com.service.spring.domain"/> <!-- 해당 패키지에 해당하는 모든 VO가 선택됨 -->
 	</typeAliases>
 	
 	<!-- 3. JDBC 환경 구축 :: DataSource -->
