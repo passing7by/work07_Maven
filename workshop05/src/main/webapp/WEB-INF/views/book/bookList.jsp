@@ -91,6 +91,8 @@ $(function() {
 			<h4>등록된 도서 목록이 없습니다.</h4>
 		</c:when>
 		<c:otherwise>
+		<b>검색 분류 : ${field}, </b>
+		<b>검색어 : ${text}</b>
 			<table id="bookTable">
 				<tr>
 					<th  colspan="4">

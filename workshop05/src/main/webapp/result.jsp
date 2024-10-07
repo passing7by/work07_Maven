@@ -13,6 +13,7 @@
 	</HEAD>
 	<BODY BGCOLOR="#FFFFFF" leftmargin="0" topmargin="0" marginwidth=0 marginheight=0>
 <c:if test="${not empty user }">
+<h4>${msg}</h4>
 <h4>${user.name} 님 로그인 되었습니다. <a href="memberLogout.do">로그아웃</a></h4>
 </c:if>
     <h1> 결과 페이지 </h1>

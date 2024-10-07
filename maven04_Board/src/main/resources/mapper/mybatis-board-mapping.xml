@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 뒤에 . 붙이지 않음 -->
+<mapper namespace="ns.sql.Board">
+	<!-- 게시글 등록...no는 자동완성...board..id(member의 컬럼) -->
+	<insert id="write" parameterType="board" useGeneratedKeys="true" keyProperty="no">
+		INSERT
+		INTO springboard (title, content, w_date, id)
+		VALUES (#{title}, #{content}, CURDATE(), #{member.id})
+	</insert>
+
+	<!--   특정 게시글이 입력된 날짜를 디비에서 받아오는 쿼리문..-->
+	<select id="selectByNoForDate" parameterType="int" resultType="string">
+		SELECT w_date AS writeDate
+		FROM springboard
+		WHERE no=#{VALUE}
+	</select>
+	
+	<resultMap id="boardListPM" type="board">
+		<id property="no" column="no"/>
+		<result property="title" column="title"/>
+		<result property="count" column="count"/> <!-- 전체 게시물을 볼 때는 보통 content를 출력하지 않음 --> 
+		<result property="writeDate" column="w_date"/>
+		<association property="member" javaType="member">
+			<id property="id" column="id"/>
+			<result property="password" column="password"/>
+			<result property="name" column="name"/>
+			<result property="address" column="address"/>			
+		</association>
+	</resultMap>
+	
+	<!-- 전체 게시물 보기 -->
+	<select id="getBoardList" resultMap="boardListPM">
+		SELECT
+		s.no, s.title, s.count, s.w_date, m.name
+		FROM springboard s, member m
+		WHERE s.id=m.id
+		ORDER BY no DESC
+	</select>
+	
+	<resultMap type="board" id="boardPM" extends="boardListPM">
+		<result property="content" column="content"/>
+		<result property="member.id" column="id"/>
+	</resultMap>
+	
+	<!-- 특정 게시글 상세 보기 :: contect, id -->
+	<select id="showContent" resultMap="boardPM" parameterType="int">
+		SELECT
+		s.no, s.title, s.count, s.w_date, s.content, s.id, m.name
+		FROM springboard s
+		JOIN member m
+		USING (id)
+		WHERE s.no=#{VALUE}
+	</select> 
+	
+	<delete id="deleteBoard" parameterType="int">	
+		DELETE FROM springboard WHERE no=#{VALUE}
+	</delete>
+	<update id="updateCount" parameterType="int">
+		UPDATE springboard SET count = count+1 WHERE no=#{VALUE}	
+	</update> 
+	<update id="updateBoard" parameterType="board">
+		UPDATE springboard SET title=#{title}, content=#{content}
+		WHERE no=#{no}
+	</update>
+</mapper>

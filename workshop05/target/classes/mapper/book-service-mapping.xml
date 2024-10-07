@@ -24,7 +24,7 @@
 	
 	<insert id="insertBook" parameterType="book">
 		INSERT
-		INTO book (isbn, title, catalogue, nation, publish_date AS publishDate, publisher, author, price, currency, description)
+		INTO book (isbn, title, catalogue, nation, publish_date, publisher, author, price, currency, description)
 		VALUES (#{isbn}, #{title}, #{catalogue}, #{nation}, #{publishDate}, #{publisher}, #{author}, #{price}, #{currency}, #{description})
 	</insert>
 	

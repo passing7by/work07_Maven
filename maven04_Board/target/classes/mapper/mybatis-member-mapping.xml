@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 뒤에 . 붙이지 않음 -->
+<mapper namespace="ns.sql.Member">
+	<!-- 게시글 쓴 사람 검색과 동시에 로그인 기능 -->
+	<select id="selectUser" parameterType="member" resultType="member">
+		SELECT
+		id, password, name, address
+		FROM member
+		WHERE id=#{id}
+	</select>
+	
+	
+</mapper>

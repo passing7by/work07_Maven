@@ -36,7 +36,7 @@ public class BookDAO {
 	}
 	
 	public List<Book> searchByPrice(int price) throws Exception{
-		List<Book> list = sqlSession.selectList(NS+"searchByPrice", price+"");
+		List<Book> list = sqlSession.selectList(NS+"searchByPrice", price);
         return list;
 	}
 
