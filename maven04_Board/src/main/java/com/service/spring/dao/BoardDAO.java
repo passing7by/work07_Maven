@@ -40,7 +40,7 @@ public class BoardDAO {
 		return sqlSession.update(NS + "updateCount", no);
 	}
 	
-	public int updateBoard(int no) {
-		return sqlSession.update(NS + "updateBoard", no);
+	public int updateBoard(Board vo) {
+		return sqlSession.update(NS + "updateBoard", vo);
 	}
 }

@@ -8,6 +8,7 @@
 <script type="text/javascript">
 	function deleteBoard() {
 		if(confirm("해당 글을 삭제 하시겠습니까?")){
+		/* confirm때문에 여기로 보냈음 */
 			location.href="delete.do?no= ${bvo.no}";
 		}
 	}//deleteBoard
@@ -50,8 +51,9 @@
 						</a>						
 					
 						<c:if test="${bvo.member.id == mvo.id }">
+						<!-- 글쓴이의 아이디가 로그인한 사람의 아이디와 같다면 (자신이 쓴 글을 자신이 보고있다면 -->
 							<img alt="삭제" src="${pageContext.request.contextPath}/img/delete_btn.jpg" border="0" onclick="deleteBoard()">
-							<img alt="삭제" src="${pageContext.request.contextPath}/img/modify_btn.jpg" border="0" onclick="updateBoard()">
+							<img alt="수정" src="${pageContext.request.contextPath}/img/modify_btn.jpg" border="0" onclick="updateBoard()">
 						</c:if>
 						</td>
 					</tr>

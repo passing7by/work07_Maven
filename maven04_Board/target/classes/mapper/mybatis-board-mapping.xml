@@ -5,6 +5,15 @@
 <!-- namespace 뒤에 . 붙이지 않음 -->
 <mapper namespace="ns.sql.Board">
 	<!-- 게시글 등록...no는 자동완성...board..id(member의 컬럼) -->
+	<!--mysql에ㅓㅅ 데이터가 입력될 때 no가 자동으로 증가되도록 하려면?
+		폼에서 받은 값을 디비에 입력하면,, 이때 디비에서 no가 자동으로 증가... 증가된 no를 vo에 주입
+		
+		useGeneratedKeys="true" 게시글 입력할 때 디비에서 자동으로 값을 증가시켜라
+		keyProperty="no" 증가된 값이 no.. coard.setNo(),, 여기서 자동증가된 no가 board에 주입
+		결과적으로 pvo와 디비의 동기화
+		
+		db에서 pk가 자동증가될 때는, 반드시 insert할 때 동기화시켜주어야 에러가 안 남
+	 -->
 	<insert id="write" parameterType="board" useGeneratedKeys="true" keyProperty="no">
 		INSERT
 		INTO springboard (title, content, w_date, id)
@@ -13,12 +22,12 @@
 
 	<!--   특정 게시글이 입력된 날짜를 디비에서 받아오는 쿼리문..-->
 	<select id="selectByNoForDate" parameterType="int" resultType="string">
-		SELECT w_date AS writeDate
+		SELECT w_date
 		FROM springboard
 		WHERE no=#{VALUE}
 	</select>
 	
-	<resultMap id="boardListPM" type="board">
+	<resultMap id="boardListRM" type="board">
 		<id property="no" column="no"/>
 		<result property="title" column="title"/>
 		<result property="count" column="count"/> <!-- 전체 게시물을 볼 때는 보통 content를 출력하지 않음 --> 
@@ -32,7 +41,7 @@
 	</resultMap>
 	
 	<!-- 전체 게시물 보기 -->
-	<select id="getBoardList" resultMap="boardListPM">
+	<select id="getBoardList" resultMap="boardListRM">
 		SELECT
 		s.no, s.title, s.count, s.w_date, m.name
 		FROM springboard s, member m
@@ -40,13 +49,13 @@
 		ORDER BY no DESC
 	</select>
 	
-	<resultMap type="board" id="boardPM" extends="boardListPM">
+	<resultMap type="board" id="boardRM" extends="boardListRM">
 		<result property="content" column="content"/>
 		<result property="member.id" column="id"/>
 	</resultMap>
 	
 	<!-- 특정 게시글 상세 보기 :: contect, id -->
-	<select id="showContent" resultMap="boardPM" parameterType="int">
+	<select id="showContent" resultMap="boardRM" parameterType="int">
 		SELECT
 		s.no, s.title, s.count, s.w_date, s.content, s.id, m.name
 		FROM springboard s

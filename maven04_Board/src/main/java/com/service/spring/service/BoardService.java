@@ -16,11 +16,17 @@ public class BoardService {
 	private BoardDAO boardDAO;
 		
 	public int write(Board vo) {
-		return boardDAO.write(vo);
-	}
-	
-	public String selectByNoForDate(int no) {
-		return boardDAO.selectByNoForDate(no);
+		
+		System.out.println("writeDate : " + vo); //no가 없을 것이다.
+		int row = boardDAO.write(vo);
+		System.out.println("writeDate : " + vo);
+		
+		String date = boardDAO.selectByNoForDate(vo.getNo());
+		vo.setWriteDate(date);
+		
+		System.out.println("writeDate : " + vo); //no가 있을 것이다. 왜? ->
+		
+		return row;
 	}
 	
 	public List<Board> getBoardList() {
@@ -28,14 +34,12 @@ public class BoardService {
 	}
 	
 	public Board showContent(int no) {
+		boardDAO.updateCount(no);
+		
 		return boardDAO.showContent(no);
 	}
 	
-	public int updateCount(int no) {
-		return boardDAO.updateCount(no);
-	}
-	
-	public int updateBoard(int no) {
-		return boardDAO.updateBoard(no);
+	public int updateBoard(Board vo) {
+		return boardDAO.updateBoard(vo);
 	}
 }
